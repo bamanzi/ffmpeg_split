@@ -55,7 +55,7 @@ def parseChapters(filename):
             m = None
 
         if m is not None:
-            chapters.append({"name": repr(num) + " - " + title, "start": m.group(2), "end": m.group(3)})
+            chapters.append({"name": title, "start": m.group(2), "end": m.group(3)})
             num += 1
 
     return chapters
@@ -91,16 +91,17 @@ def getChapters():
 
         chapters = parseChapters(infile)
 
-        for chap in chapters:
+        for i, chap in enumerate(chapters):
             chap['name'] = chap['name'].replace('/', ':')
             chap['name'] = chap['name'].replace("'", "\'")
-            print("start:" + chap['start'])
             chap['title'] = chap['name']
+            print("start:" + chap['start'])
             reg_path = re.sub("[^-a-zA-Z0-9_.():' ]+",'', chap['name']) + fext
+            reg_path = f"{i:0>2}" + " - " + reg_path 
             chap['outfile'] = os.path.join(str(newdir), reg_path)
-            print(chap['outfile'])
+            print(chap['outfile'], ':', chap['title'])
             chap['origfile'] = infile
-            print(chap['outfile'])
+            #print(chap['origfile'])
         return chapters
 
 def convertChapters(chapters):
