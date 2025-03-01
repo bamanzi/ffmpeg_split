@@ -112,6 +112,7 @@ def convertChapters(chapters):
             '-vcodec', 'copy',
             '-acodec', 'copy',
             '-metadata', "title=%s" % chap['title'],
+            '-map_chapters', '-1',
             '-ss', chap['start'],
             '-to', chap['end'],
             chap['outfile']]
