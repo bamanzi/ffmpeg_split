@@ -95,6 +95,7 @@ def getChapters():
             chap['name'] = chap['name'].replace('/', ':')
             chap['name'] = chap['name'].replace("'", "\'")
             print("start:" + chap['start'])
+            chap['title'] = chap['name']
             reg_path = re.sub("[^-a-zA-Z0-9_.():' ]+",'', chap['name']) + fext
             chap['outfile'] = os.path.join(str(newdir), reg_path)
             print(chap['outfile'])
@@ -110,6 +111,7 @@ def convertChapters(chapters):
             "ffmpeg", '-i', chap['origfile'],
             '-vcodec', 'copy',
             '-acodec', 'copy',
+            '-metadata', "title=%s" % chap['title'],
             '-ss', chap['start'],
             '-to', chap['end'],
             chap['outfile']]
